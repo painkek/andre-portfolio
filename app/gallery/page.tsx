@@ -28,15 +28,15 @@ export default function Gallery() {
       <Navbar />
       <div className="bg-lime-50">
         <div className="min-h-screen p-4 md:p-8 mx-auto font-sans text-black">
-          {/* Album view - now as a full page */}
+          {/* album view */}
           {selectedAlbum !== null ? (
             <div className="max-w-6xl mx-auto">
-              {/* Album header */}
+              {/* album header */}
               <div className="mb-8 text-center">
                 <h2 className="text-4xl font-bold mt-2">PORTFOLIO</h2>
               </div>
 
-              {/* Main image */}
+              {/* main image */}
               <div className="mb-8">
                 <Image
                   src={galleryImages[selectedAlbum]}
@@ -47,7 +47,7 @@ export default function Gallery() {
                 />
               </div>
 
-              {/* Navigation and image count */}
+              {/* navigation and image count */}
               <div className="flex justify-between items-center mt-4">
                 <button
                   onClick={closeAlbum}
