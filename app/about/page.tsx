@@ -24,30 +24,28 @@ export default function AboutPage() {
             <h2 className="text-lg font-semibold">ABOUT</h2>
 
             <p>
-              I am drawn to quiet moments and my work is rooted in stillness,
-              memory, and emotional presence. Photography has become my way of
-              sitting with these quiet moments in reverence, shooting pictures
-              not to possess them but to honor the moment.
+              I’m drawn to quiet, unspoken moments—where memory, emotion, and
+              presence quietly unfold. Photography has become my way of honoring
+              these moments, not by capturing them to keep, but by observing
+              them with reverence.
             </p>
 
             <p>
-              I work with soft light, muted palettes, and a patient approach
-              that allows space for emotion to live within in the frame. Whether
-              I&apos;m photographing an artist on stage, a chef in their
-              element, or a glance shared across a room, I try to hold each
-              moment gently, without interrupting its truth. I work with brands,
-              publications, and individuals who value tone, texture, and
-              emotional storytelling. If that speaks to you, I&apos;d love to
-              connect.
+              My work is shaped by soft light, muted tones, and a slow,
+              attentive process that gives emotion room to breathe. Whether it’s
+              an artist mid-performance, a chef immersed in their craft, or a
+              fleeting glance across a room, I aim to document with care—never
+              disrupting, only witnessing.
             </p>
 
             <p>
-              Currently based in Los Angeles and available for commissions
-              worldwide.
+              I collaborate with brands, publications, and individuals who value
+              texture, tone, and genuine visual storytelling. If that resonates
+              with you, I’d love to connect.
             </p>
 
             <button className="self-start bg-lime-50 text-brown px-4 py-2 border border-brown hover:bg-brown hover:text-white transition">
-              React Out
+              Reach Out
             </button>
           </div>
         </div>
