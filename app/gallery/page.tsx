@@ -14,7 +14,7 @@ export default function Gallery() {
       id: "heart",
       clientName: "Heart",
       photos: Array.from(
-        { length: 6 },
+        { length: 8 },
         (_, i) => `/gallery/heart/${i + 1}.jpg`
       ),
       thumbnail: "/gallery/1.jpg",
@@ -22,20 +22,20 @@ export default function Gallery() {
     {
       id: "azul",
       clientName: "Azul",
-      photos: Array.from({ length: 6 }, (_, i) => `/gallery/azul/${i + 1}.jpg`),
+      photos: Array.from({ length: 8 }, (_, i) => `/gallery/azul/${i + 1}.jpg`),
       thumbnail: "/gallery/2.jpg",
     },
     {
       id: "lost",
       clientName: "Lost",
-      photos: Array.from({ length: 6 }, (_, i) => `/gallery/lost/${i + 1}.jpg`),
+      photos: Array.from({ length: 8 }, (_, i) => `/gallery/lost/${i + 1}.jpg`),
       thumbnail: "/gallery/3.jpg",
     },
     {
       id: "first-birthday",
       clientName: "1st Birthday",
       photos: Array.from(
-        { length: 6 },
+        { length: 8 },
         (_, i) => `/gallery/first-birthday/${i + 1}.jpg`
       ),
       thumbnail: "/gallery/4.jpg",
@@ -44,7 +44,7 @@ export default function Gallery() {
       id: "kirsten",
       clientName: "Kirsten",
       photos: Array.from(
-        { length: 6 },
+        { length: 8 },
         (_, i) => `/gallery/kirsten/${i + 1}.jpg`
       ),
       thumbnail: "/gallery/5.jpg",
@@ -52,7 +52,7 @@ export default function Gallery() {
     {
       id: "edna",
       clientName: "Edna's 50th",
-      photos: Array.from({ length: 6 }, (_, i) => `/gallery/edna/${i + 1}.jpg`),
+      photos: Array.from({ length: 8 }, (_, i) => `/gallery/edna/${i + 1}.jpg`),
       thumbnail: "/gallery/6.jpg",
     },
   ];
@@ -70,6 +70,20 @@ export default function Gallery() {
     setSelectedAlbum(null);
   };
 
+  const navigatePhoto = (direction) => {
+    setSelectedPhotoIndex((prevIndex) => {
+      if (direction === "prev") {
+        return prevIndex === 0
+          ? selectedAlbum.photos.length - 1
+          : prevIndex - 1;
+      } else {
+        return prevIndex === selectedAlbum.photos.length - 1
+          ? 0
+          : prevIndex + 1;
+      }
+    });
+  };
+
   return (
     <div>
       <Navbar />
@@ -84,18 +98,59 @@ export default function Gallery() {
                 </h2>
               </div>
 
-              {/* main featured image */}
-              <div className="mb-8">
-                <Image
-                  src={selectedAlbum.photos[selectedPhotoIndex]}
-                  alt={`${selectedAlbum.clientName} - Photo ${
-                    selectedPhotoIndex + 1
-                  }`}
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto max-h-[80vh] object-cover"
-                  priority
-                />
+              {/* main featured image with navigation arrows */}
+              <div className="mb-8 relative">
+                <div className="relative">
+                  <Image
+                    src={selectedAlbum.photos[selectedPhotoIndex]}
+                    alt={`${selectedAlbum.clientName} - Photo ${
+                      selectedPhotoIndex + 1
+                    }`}
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto max-h-[80vh] object-contain"
+                    priority
+                  />
+                  {/* Navigation arrows */}
+                  <button
+                    onClick={() => navigatePhoto("prev")}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => navigatePhoto("next")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               {/* album photos grid */}
