@@ -30,7 +30,7 @@ export default function Gallery() {
         <div className="min-h-screen p-4 md:p-8 mx-auto font-sans text-black">
           {/* album view */}
           {selectedAlbum !== null ? (
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-7xl mx-auto">
               {/* album header */}
               <div className="mb-8 text-center">
                 <h2 className="text-4xl font-bold mt-2">PORTFOLIO</h2>
@@ -43,20 +43,45 @@ export default function Gallery() {
                   alt={`Gallery image ${selectedAlbum + 1}`}
                   width={1200}
                   height={800}
-                  className="w-full h-auto max-h-[80vh] object-contain"
+                  className="w-full h-auto max-h-[80vh] object-cover"
                 />
               </div>
 
-              {/* navigation and image count */}
-              <div className="flex justify-between items-center mt-4">
+              {/* full album gallery grid */}
+              <div className="mb-12">
+                <h4 className="text-2xl font-semibold mb-6 text-center">
+                  Full Album
+                </h4>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {galleryImages.map((imgSrc, i) => (
+                    <div
+                      key={i}
+                      className="aspect-square border border-gray-200 rounded-lg overflow-hidden 
+                                hover:shadow-md transition-all duration-200 cursor-pointer"
+                      onClick={() => setSelectedAlbum(i)}
+                    >
+                      <Image
+                        src={imgSrc}
+                        alt={`Album image ${i + 1}`}
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* navigation */}
+              <div className="flex justify-between items-center mt-6">
                 <button
                   onClick={closeAlbum}
-                  className="text-black hover:text-gray-600 text-lg"
+                  className="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
                 >
                   ← Back to Gallery
                 </button>
-                <div className="text-black">
-                  Image {selectedAlbum + 1} of {galleryImages.length}
+                <div className="text-gray-700">
+                  Showing {selectedAlbum + 1} of {galleryImages.length} photos
                 </div>
               </div>
             </div>
