@@ -4,12 +4,19 @@ import Navbar from "@/components/common/navbar";
 import Image from "next/image";
 import { useState } from "react";
 
+type Album = {
+  id: string;
+  clientName: string;
+  photos: string[];
+  thumbnail: string;
+};
+
 export default function Gallery() {
-  const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
   // Albums organized by client names
-  const clientAlbums = [
+  const clientAlbums: Album[] = [
     {
       id: "heart",
       clientName: "Heart",
@@ -57,31 +64,17 @@ export default function Gallery() {
     },
   ];
 
-  const handleAlbumClick = (album) => {
+  const handleAlbumClick = (album: Album) => {
     setSelectedAlbum(album);
     setSelectedPhotoIndex(0);
   };
 
-  const handlePhotoClick = (index) => {
+  const handlePhotoClick = (index: number) => {
     setSelectedPhotoIndex(index);
   };
 
   const closeAlbum = () => {
     setSelectedAlbum(null);
-  };
-
-  const navigatePhoto = (direction) => {
-    setSelectedPhotoIndex((prevIndex) => {
-      if (direction === "prev") {
-        return prevIndex === 0
-          ? selectedAlbum.photos.length - 1
-          : prevIndex - 1;
-      } else {
-        return prevIndex === selectedAlbum.photos.length - 1
-          ? 0
-          : prevIndex + 1;
-      }
-    });
   };
 
   return (
@@ -96,61 +89,6 @@ export default function Gallery() {
                 <h2 className="text-4xl font-bold mt-2">
                   {selectedAlbum.clientName}
                 </h2>
-              </div>
-
-              {/* main featured image with navigation arrows */}
-              <div className="mb-8 relative">
-                <div className="relative">
-                  <Image
-                    src={selectedAlbum.photos[selectedPhotoIndex]}
-                    alt={`${selectedAlbum.clientName} - Photo ${
-                      selectedPhotoIndex + 1
-                    }`}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto max-h-[80vh] object-contain"
-                    priority
-                  />
-                  {/* Navigation arrows */}
-                  <button
-                    onClick={() => navigatePhoto("prev")}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => navigatePhoto("next")}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
               </div>
 
               {/* album photos grid */}
