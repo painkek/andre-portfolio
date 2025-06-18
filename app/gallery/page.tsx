@@ -14,8 +14,8 @@ type Album = {
 export default function Gallery() {
   const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  const [isFullViewOpen, setIsFullViewOpen] = useState(false);
 
-  // Albums organized by client names
   const clientAlbums: Album[] = [
     {
       id: "heart",
@@ -71,10 +71,30 @@ export default function Gallery() {
 
   const handlePhotoClick = (index: number) => {
     setSelectedPhotoIndex(index);
+    setIsFullViewOpen(true);
   };
 
   const closeAlbum = () => {
     setSelectedAlbum(null);
+    setIsFullViewOpen(false);
+  };
+
+  const nextPhoto = () => {
+    if (!selectedAlbum) return;
+    setSelectedPhotoIndex((prev) =>
+      prev === selectedAlbum.photos.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevPhoto = () => {
+    if (!selectedAlbum) return;
+    setSelectedPhotoIndex((prev) =>
+      prev === 0 ? selectedAlbum.photos.length - 1 : prev - 1
+    );
+  };
+
+  const closeFullView = () => {
+    setIsFullViewOpen(false);
   };
 
   return (
@@ -82,38 +102,60 @@ export default function Gallery() {
       <Navbar />
       <div className="bg-lime-50">
         <div className="min-h-screen p-4 md:p-8 mx-auto font-sans text-black">
-          {/* album detail view */}
+          {/* fullscreen Image Modal */}
+          {isFullViewOpen && selectedAlbum && (
+            <div className="fixed inset-0 z-50 bg-lime-50/30 backdrop-blur-md flex items-center justify-center">
+              <button
+                onClick={closeFullView}
+                className="absolute top-6 right-6 text-black text-2xl font-bold"
+              >
+                ✕
+              </button>
+              <button
+                onClick={prevPhoto}
+                className="absolute left-4 text-black text-3xl font-bold px-4"
+              >
+                ‹
+              </button>
+              <Image
+                src={selectedAlbum.photos[selectedPhotoIndex]}
+                alt="Full view"
+                width={1200}
+                height={800}
+                className="max-w-full max-h-[90vh] object-contain rounded-md"
+              />
+              <button
+                onClick={nextPhoto}
+                className="absolute right-4 text-black text-3xl font-bold px-4"
+              >
+                ›
+              </button>
+            </div>
+          )}
+
+          {/* Album Detail View */}
           {selectedAlbum ? (
             <div className="max-w-7xl mx-auto">
               <div className="mb-8 text-center">
-                <h2 className="text-4xl font-bold mt-2">
-                  {selectedAlbum.clientName}
+                <h2 className="text-4xl font-light mt-2">
+                  {selectedAlbum.clientName + "'s" + " Gallery"}
                 </h2>
               </div>
 
-              {/* album photos grid */}
               <div className="mb-12">
-                <h4 className="text-2xl font-semibold mb-6 text-center">
-                  Full Album
-                </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {selectedAlbum.photos.map((photo, index) => (
                     <div
                       key={index}
-                      className={`aspect-square rounded-lg overflow-hidden cursor-pointer
-                                ${
-                                  selectedPhotoIndex === index
-                                    ? "ring-4 ring-blue-500"
-                                    : "border border-gray-200"
-                                }`}
                       onClick={() => handlePhotoClick(index)}
+                      className="aspect-square cursor-pointer rounded-lg overflow-hidden border hover:ring-2 hover:ring-blue-400 transition"
                     >
                       <Image
                         src={photo}
-                        alt={`${selectedAlbum.clientName} photo ${index + 1}`}
+                        alt={`Photo ${index + 1}`}
                         width={400}
                         height={400}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   ))}
@@ -127,41 +169,38 @@ export default function Gallery() {
                 >
                   ← Back to Gallery
                 </button>
-                <div className="text-gray-700">
+                <span className="text-gray-700">
                   Photo {selectedPhotoIndex + 1} of{" "}
                   {selectedAlbum.photos.length}
-                </div>
+                </span>
               </div>
             </div>
           ) : (
-            /* main gallery view */
+            /* Main Gallery View */
             <div className="max-w-6xl mx-auto">
-              <h1 className="text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-center">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
                 GALLERY
               </h1>
-
-              <div className="mb-8 md:mb-12 text-center text-sm md:text-base">
+              <p className="mb-10 text-center text-sm md:text-base">
                 I do portrait, birthday, events, conceptual.
-              </div>
+              </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {clientAlbums.map((album, i) => (
+                {clientAlbums.map((album) => (
                   <div
                     key={album.id}
-                    className="aspect-[3/2] border border-gray-300 rounded-lg overflow-hidden 
-                              hover:shadow-lg transition-all duration-200 cursor-pointer relative group"
                     onClick={() => handleAlbumClick(album)}
+                    className="aspect-[3/2] border rounded-lg overflow-hidden cursor-pointer relative group hover:shadow-md transition"
                   >
                     <Image
                       src={album.thumbnail}
-                      alt={`${album.clientName} album`}
+                      alt={album.clientName}
                       width={800}
                       height={533}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      priority={i < 3}
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
-                      <span className="text-white opacity-0 group-hover:opacity-100 font-bold text-lg transition-opacity duration-300">
+                    <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition">
+                      <span className="text-white opacity-0 group-hover:opacity-100 font-semibold text-lg">
                         View {album.clientName}
                       </span>
                     </div>

@@ -1,36 +1,42 @@
 // app/about/page.tsx
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/components/common/navbar";
 
 export default function AboutPage() {
   return (
-    <nav>
+    <>
       <Navbar />
-      <main className="min-h-screen bg-cream px-6 py-12 flex flex-col items-center justify-start bg-lime-50">
-        <div className="max-w-4xl w-full flex flex-col md:flex-row gap-3">
-          {/* image */}
-          <div className="w-full md:w-xs mx-12 flex justify-center md:justify-start">
-            <Image
-              src="/about/about.jpg"
-              alt="About"
-              width={600}
-              height={400}
-              className="w-full h-auto max-w-xs md:max-w-full object-cover rounded"
-            />
+      <main className="min-h-screen bg-lime-50 px-6 py-16">
+        <section className="max-w-6xl mx-auto flex flex-col md:flex-row gap-0 items-center">
+          {/* Image */}
+          <div className="w-full md:w-1/2 flex justify-center">
+            <div className="w-full max-w-3/6 rounded-xl overflow-hidden shadow-md">
+              <Image
+                src="/about/about.jpg"
+                alt="About"
+                width={400}
+                height={500}
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
 
           {/* text */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center text-black space-y-6">
-            <h2 className="text-lg font-semibold">ABOUT</h2>
+          <div className="w-full md:w-1/2 text-gray-800 space-y-6">
+            <h1 className="text-4xl font-bold tracking-tight text-brown">
+              About Me
+            </h1>
 
-            <p>
+            <p className="leading-relaxed">
               I’m drawn to quiet, unspoken moments—where memory, emotion, and
               presence quietly unfold. Photography has become my way of honoring
               these moments, not by capturing them to keep, but by observing
               them with reverence.
             </p>
 
-            <p>
+            <p className="leading-relaxed">
               My work is shaped by soft light, muted tones, and a slow,
               attentive process that gives emotion room to breathe. Whether it’s
               an artist mid-performance, a chef immersed in their craft, or a
@@ -38,18 +44,18 @@ export default function AboutPage() {
               disrupting, only witnessing.
             </p>
 
-            <p>
+            <p className="leading-relaxed">
               I collaborate with brands, publications, and individuals who value
               texture, tone, and genuine visual storytelling. If that resonates
               with you, I’d love to connect.
             </p>
 
-            <button className="self-start bg-lime-50 text-brown px-4 py-2 border border-brown hover:bg-brown hover:text-white transition">
+            <button className="mt-4 inline-block bg-brown text-white px-6 py-3 rounded-lg hover:bg-brown/90 transition">
               Reach Out
             </button>
           </div>
-        </div>
+        </section>
       </main>
-    </nav>
+    </>
   );
 }
